@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -10,17 +10,12 @@ app.post('/ban', (req, res) => {
     const { target, method } = req.body;
 
     if (!target || !method) {
-        return res.status(400).json({ success: false, message: 'Target dan metode wajib diisi' });
+        return res.status(400).json({ error: 'Missing parameters' });
     }
 
-    console.log(`Proses ban: ${target} | Metode: ${method}`);
-    const success = Math.random() > 0.2;
-
-    if (success) {
-        res.json({ success: true, message: `Nomor ${target} berhasil di-ban dengan metode ${method}` });
-    } else {
-        res.json({ success: false, message: `Gagal ban nomor ${target}, coba lagi` });
-    }
+    // Simulasi tindakan
+    console.log(`Menyerang ${target} dengan metode ${method}`);
+    res.json({ success: true, message: `Target ${target} sedang diproses dengan ${method}` });
 });
 
 app.listen(PORT, () => {
